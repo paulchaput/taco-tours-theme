@@ -1,0 +1,99 @@
+<section class="tt-testimonials tt-section full-width">
+  <div class="tt-container">
+    <p class="tt-section-label">{{ section.settings.label | default: 'Reviews' }}</p>
+    <h2 class="tt-section-title">{{ section.settings.title | default: 'What our guests say' }}</h2>
+    <p class="tt-section-subtitle">{{ section.settings.subtitle | default: 'Real experiences from real taco lovers.' }}</p>
+
+    <div class="tt-testimonials__grid">
+      {% for block in section.blocks %}
+        <div class="tt-testimonial-card" {{ block.shopify_attributes }}>
+          <div class="tt-testimonial-card__stars" aria-label="{{ block.settings.stars }} out of 5 stars">
+            {% for i in (1..5) %}
+              {% if i <= block.settings.stars %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display:inline;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <p class="tt-testimonial-card__text">"{{ block.settings.text }}"</p>
+          <div class="tt-testimonial-card__author">
+            <div class="tt-testimonial-card__avatar">{{ block.settings.name | slice: 0 }}</div>
+            <div>
+              <div class="tt-testimonial-card__name">{{ block.settings.name }}</div>
+              <div class="tt-testimonial-card__origin">{{ block.settings.origin }}</div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Section label",
+      "default": "Reviews"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "What our guests say"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Real experiences from real taco lovers."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Quote",
+          "default": "Best experience in Mexico City!"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Guest Name"
+        },
+        {
+          "type": "text",
+          "id": "origin",
+          "label": "Origin",
+          "default": "New York, USA"
+        },
+        {
+          "type": "range",
+          "id": "stars",
+          "label": "Stars",
+          "min": 1,
+          "max": 5,
+          "default": 5
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        { "type": "testimonial", "settings": { "text": "I thought I knew tacos until Christopher took us to spots I never would have found. The al pastor at the second stop literally changed my life. Worth every peso.", "name": "Sarah M.", "origin": "Austin, TX", "stars": 5 } },
+        { "type": "testimonial", "settings": { "text": "This isn't just a food tour, it's a cultural experience. Christopher knows the history behind every taqueria and every taco. My friends and I haven't stopped talking about it.", "name": "David K.", "origin": "London, UK", "stars": 5 } },
+        { "type": "testimonial", "settings": { "text": "The combi ride alone is worth it. Add in 8 incredible tacos, great company, and Christopher's energy — this is the must-do activity in CDMX.", "name": "Ana L.", "origin": "Montreal, CA", "stars": 5 } }
+      ]
+    }
+  ]
+}
+{% endschema %}

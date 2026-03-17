@@ -1,0 +1,85 @@
+<section class="tt-faq tt-section full-width" id="faq">
+  <div class="tt-container">
+    <div class="tt-faq__inner">
+      <div>
+        <p class="tt-section-label">{{ section.settings.label | default: 'FAQ' }}</p>
+        <h2 class="tt-section-title">{{ section.settings.title | default: 'Common questions' }}</h2>
+        <p class="tt-section-subtitle">{{ section.settings.subtitle | default: "Everything you need to know before your taco adventure." }}</p>
+      </div>
+
+      <div class="tt-faq__list">
+        {% for block in section.blocks %}
+          <details class="tt-faq__item" {{ block.shopify_attributes }}>
+            <summary class="tt-faq__question">
+              {{ block.settings.question }}
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            </summary>
+            <div class="tt-faq__answer">
+              {{ block.settings.answer }}
+            </div>
+          </details>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Section label",
+      "default": "FAQ"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Common questions"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Everything you need to know before your taco adventure."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How does it work?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Answer goes here."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "What's included in the tour?", "answer": "Everything! Transport in our combi van, 8 tacos across 4 taquerias (2 per stop), drinks at each location, and your guide Christopher sharing the history and culture behind each taco." } },
+        { "type": "faq", "settings": { "question": "How long does the tour last?", "answer": "The tour runs approximately 3 to 4 hours. We take our time at each stop so you can enjoy the food, the atmosphere, and the stories." } },
+        { "type": "faq", "settings": { "question": "Can I join if I have dietary restrictions?", "answer": "We do our best to accommodate allergies and dietary needs. Please let us know when booking, and we'll coordinate with the taquerias. Note: our tours are focused on traditional Mexican street food and options may be limited for strict dietary requirements." } },
+        { "type": "faq", "settings": { "question": "What's the cancellation policy?", "answer": "Full refund if you cancel 48 hours or more before the tour. Cancellations within 48 hours are non-refundable, but you can reschedule once for free." } },
+        { "type": "faq", "settings": { "question": "Is the tour in English or Spanish?", "answer": "Tours are conducted in English with plenty of Spanish sprinkled in for the authentic experience. Christopher is fluent in both." } },
+        { "type": "faq", "settings": { "question": "Where do we meet?", "answer": "You'll receive a meeting point in the confirmation email, typically a central location that's easy to reach by metro or taxi. The combi picks you up from there." } },
+        { "type": "faq", "settings": { "question": "Is the food safe to eat?", "answer": "All taquerias on our route are carefully selected for both quality and hygiene. Christopher personally vets every stop. That said, if you have a sensitive stomach, we recommend coming prepared just in case." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

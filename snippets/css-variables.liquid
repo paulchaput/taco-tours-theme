@@ -1,0 +1,33 @@
+{% style %}
+  {{ settings.type_primary_font | font_face: font_display: 'swap' }}
+  {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
+
+  :root {
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Karla', sans-serif;
+    --font-primary--family: {{ settings.type_primary_font.family }}, {{ settings.type_primary_font.fallback_families }};
+    --font-primary--style: {{ settings.type_primary_font.style }};
+    --font-primary--weight: {{ settings.type_primary_font.weight }};
+
+    --page-width: {{ settings.max_page_width }};
+    --page-margin: {{ settings.min_page_margin }}px;
+
+    --color-primary: #C8102E;
+    --color-primary-dark: #9B0D23;
+    --color-secondary: #D4A017;
+    --color-secondary-light: #E8C547;
+    --color-accent: #2D5016;
+    --color-cream: #FDF6EC;
+    --color-warm-white: #FAF5EF;
+    --color-text: #1A1A1A;
+    --color-text-muted: #6B5E50;
+    --color-border: #E8DDD0;
+
+    --color-background: {{ settings.background_color | default: '#FDF6EC' }};
+    --color-foreground: {{ settings.foreground_color | default: '#1A1A1A' }};
+    --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
+
+    --section-gap: 0;
+    --content-max: 1200px;
+  }
+{% endstyle %}

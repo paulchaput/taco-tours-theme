@@ -1,0 +1,39 @@
+<header class="tt-header">
+  <div class="tt-header__inner">
+    <a href="{{ routes.root_url }}" class="tt-header__logo">
+      TACO<span>TOUR</span>
+    </a>
+
+    <nav class="tt-header__nav">
+      <a href="#included">What's Included</a>
+      <a href="#guide">Your Guide</a>
+      <a href="#book">Book a Tour</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <a href="#book" class="tt-btn tt-btn--primary tt-header__cta">Book Now</a>
+
+    <button class="tt-header__mobile-toggle" aria-label="Open menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "t:general.header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:labels.menu"
+    },
+    {
+      "type": "link_list",
+      "id": "customer_account_menu",
+      "label": "t:labels.customer_account_menu",
+      "default": "customer-account-main-menu"
+    }
+  ]
+}
+{% endschema %}

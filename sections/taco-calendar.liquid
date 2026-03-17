@@ -1,0 +1,166 @@
+<section class="tt-calendar tt-section full-width" id="book">
+  <div class="tt-container">
+    <p class="tt-section-label">{{ section.settings.label | default: 'Book your spot' }}</p>
+    <h2 class="tt-section-title">{{ section.settings.title | default: 'Upcoming Tours' }}</h2>
+    <p class="tt-section-subtitle">{{ section.settings.subtitle | default: 'Select a date that works for you. Groups are limited to 10 people for the best experience.' }}</p>
+
+    <div class="tt-calendar__inner">
+      <div class="tt-calendar__dates">
+        {% for block in section.blocks %}
+          <div class="tt-calendar__date-card" {{ block.shopify_attributes }}>
+            <div class="tt-calendar__date-day">{{ block.settings.date | default: 'Saturday, March 22' }}</div>
+            <div class="tt-calendar__date-time">{{ block.settings.time | default: '6:00 PM - 9:30 PM' }}</div>
+            <div class="tt-calendar__date-spots {% if block.settings.spots_left <= 3 %}tt-calendar__date-spots--low{% endif %}">
+              {{ block.settings.spots_left | default: 8 }} spots left
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="tt-calendar__info-card">
+        <h3 class="tt-calendar__info-title">Tour Details</h3>
+        <div class="tt-calendar__info-row">
+          <span class="tt-calendar__info-label">Duration</span>
+          <span class="tt-calendar__info-value">{{ section.settings.duration | default: '3-4 hours' }}</span>
+        </div>
+        <div class="tt-calendar__info-row">
+          <span class="tt-calendar__info-label">Stops</span>
+          <span class="tt-calendar__info-value">{{ section.settings.stops | default: '4 taquerias' }}</span>
+        </div>
+        <div class="tt-calendar__info-row">
+          <span class="tt-calendar__info-label">Tacos</span>
+          <span class="tt-calendar__info-value">{{ section.settings.tacos | default: '8 per person' }}</span>
+        </div>
+        <div class="tt-calendar__info-row">
+          <span class="tt-calendar__info-label">Group size</span>
+          <span class="tt-calendar__info-value">{{ section.settings.group_size | default: 'Max 10' }}</span>
+        </div>
+        <div class="tt-calendar__info-row">
+          <span class="tt-calendar__info-label">Transport</span>
+          <span class="tt-calendar__info-value">{{ section.settings.transport | default: 'Combi included' }}</span>
+        </div>
+
+        <div class="tt-calendar__price-total">${{ section.settings.price | default: '1,500' }} MXN</div>
+        <p class="tt-calendar__price-note">per person, all inclusive</p>
+
+        <a href="{{ section.settings.booking_url | default: '#' }}" class="tt-btn tt-btn--primary tt-btn--large tt-calendar__book-btn">
+          {{ section.settings.cta_text | default: 'Reserve Now' }}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Tour Calendar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Section label",
+      "default": "Book your spot"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Upcoming Tours"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Select a date that works for you. Groups are limited to 10 people for the best experience."
+    },
+    {
+      "type": "text",
+      "id": "duration",
+      "label": "Duration",
+      "default": "3-4 hours"
+    },
+    {
+      "type": "text",
+      "id": "stops",
+      "label": "Stops",
+      "default": "4 taquerias"
+    },
+    {
+      "type": "text",
+      "id": "tacos",
+      "label": "Tacos",
+      "default": "8 per person"
+    },
+    {
+      "type": "text",
+      "id": "group_size",
+      "label": "Group size",
+      "default": "Max 10"
+    },
+    {
+      "type": "text",
+      "id": "transport",
+      "label": "Transport",
+      "default": "Combi included"
+    },
+    {
+      "type": "text",
+      "id": "price",
+      "label": "Price",
+      "default": "1,500"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Reserve Now"
+    },
+    {
+      "type": "url",
+      "id": "booking_url",
+      "label": "Booking URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tour_date",
+      "name": "Tour Date",
+      "settings": [
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "Saturday, March 22"
+        },
+        {
+          "type": "text",
+          "id": "time",
+          "label": "Time",
+          "default": "6:00 PM - 9:30 PM"
+        },
+        {
+          "type": "range",
+          "id": "spots_left",
+          "label": "Spots left",
+          "min": 0,
+          "max": 10,
+          "default": 8
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tour Calendar",
+      "blocks": [
+        { "type": "tour_date", "settings": { "date": "Saturday, March 22", "time": "6:00 PM - 9:30 PM", "spots_left": 8 } },
+        { "type": "tour_date", "settings": { "date": "Sunday, March 23", "time": "1:00 PM - 4:30 PM", "spots_left": 5 } },
+        { "type": "tour_date", "settings": { "date": "Wednesday, March 26", "time": "7:00 PM - 10:30 PM", "spots_left": 10 } },
+        { "type": "tour_date", "settings": { "date": "Saturday, March 29", "time": "6:00 PM - 9:30 PM", "spots_left": 3 } },
+        { "type": "tour_date", "settings": { "date": "Sunday, March 30", "time": "1:00 PM - 4:30 PM", "spots_left": 10 } },
+        { "type": "tour_date", "settings": { "date": "Saturday, April 5", "time": "6:00 PM - 9:30 PM", "spots_left": 10 } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,34 @@
+<footer class="tt-footer full-width">
+  <div class="tt-footer__inner">
+    <div class="tt-footer__brand">TACO TOUR</div>
+    <div class="tt-footer__links">
+      <a href="#included">What's Included</a>
+      <a href="#book">Book a Tour</a>
+      <a href="#faq">FAQ</a>
+      <a href="/pages/terms">Terms</a>
+      <a href="/pages/privacy">Privacy</a>
+    </div>
+    <div class="tt-footer__copy">
+      &copy; {{ 'now' | date: '%Y' }} Taco Tour by El Perrito Taquero. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "t:general.footer",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:labels.menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "t:labels.show_payment_icons",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

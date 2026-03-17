@@ -1,0 +1,53 @@
+<section class="tt-cta tt-section full-width">
+  <div class="tt-container" style="text-align: center;">
+    <p class="tt-section-label" style="color: rgba(255,255,255,0.7);">{{ section.settings.label | default: "Don't miss out" }}</p>
+    <h2 class="tt-cta__title">{{ section.settings.title | default: 'Ready to taste the real CDMX?' }}</h2>
+    <p class="tt-cta__subtitle">{{ section.settings.subtitle | default: 'Tours fill up fast. Secure your spot and get ready for the best tacos of your life.' }}</p>
+    <a href="{{ section.settings.cta_url | default: '#book' }}" class="tt-btn tt-btn--primary tt-btn--large">
+      {{ section.settings.cta_text | default: 'Book Your Tour' }}
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CTA Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Don't miss out"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Ready to taste the real CDMX?"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Tours fill up fast. Secure your spot and get ready for the best tacos of your life."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Book Your Tour"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CTA Banner"
+    }
+  ]
+}
+{% endschema %}

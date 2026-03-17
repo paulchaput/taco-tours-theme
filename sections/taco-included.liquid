@@ -1,0 +1,108 @@
+<section class="tt-included tt-section full-width" id="included">
+  <div class="tt-container">
+    <p class="tt-section-label">{{ section.settings.label | default: 'What you get' }}</p>
+    <h2 class="tt-section-title">{{ section.settings.title | default: 'Everything included' }}</h2>
+    <p class="tt-section-subtitle">{{ section.settings.subtitle | default: 'One price, zero worries. Just show up hungry.' }}</p>
+
+    <div class="tt-included__grid">
+      {% for block in section.blocks %}
+        <div class="tt-included__item" {{ block.shopify_attributes }}>
+          <div class="tt-included__icon">
+            {% case block.settings.icon %}
+              {% when 'van' %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 13.52 9H12"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+              {% when 'taco' %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 11h.01"/><path d="M11 15h.01"/><path d="M16 16h.01"/><path d="m2 16 20 6-6-20A20 20 0 0 0 2 16"/><path d="M5.71 17.11a17.04 17.04 0 0 1 11.4-11.4"/></svg>
+              {% when 'guide' %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              {% when 'drink' %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8"/><path d="M9 2v2.789a4 4 0 0 1-.672 2.219l-2.656 3.984A4 4 0 0 0 5 13.212V19a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5.788a4 4 0 0 0-.672-2.22l-2.656-3.984A4 4 0 0 1 15 4.789V2"/></svg>
+              {% when 'map' %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              {% when 'camera' %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+              {% else %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+              {% endcase %}
+          </div>
+          <h3 class="tt-included__item-title">{{ block.settings.title }}</h3>
+          <p class="tt-included__item-desc">{{ block.settings.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "What's Included",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Section label",
+      "default": "What you get"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Everything included"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "One price, zero worries. Just show up hungry."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "van", "label": "Van / Transport" },
+            { "value": "taco", "label": "Taco / Food" },
+            { "value": "guide", "label": "Guide / Person" },
+            { "value": "drink", "label": "Drink" },
+            { "value": "map", "label": "Map / Location" },
+            { "value": "camera", "label": "Camera / Photo" },
+            { "value": "star", "label": "Star" }
+          ],
+          "default": "taco"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Feature title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Feature description goes here."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "What's Included",
+      "blocks": [
+        { "type": "feature", "settings": { "icon": "van", "title": "Combi Transport", "description": "Hop in our iconic combi van. We handle all the driving so you can enjoy the ride through CDMX." } },
+        { "type": "feature", "settings": { "icon": "taco", "title": "8 Tacos, 4 Stops", "description": "Two expertly chosen tacos at each of four legendary taquerias. From al pastor to regional specialties." } },
+        { "type": "feature", "settings": { "icon": "guide", "title": "Expert Guide", "description": "Led by Christopher Chaput, El Perrito Taquero. History, stories, and insider knowledge at every stop." } },
+        { "type": "feature", "settings": { "icon": "drink", "title": "Bebidas Included", "description": "Refreshing drinks at each stop. Agua fresca, horchata, or a cold cerveza to wash it all down." } },
+        { "type": "feature", "settings": { "icon": "map", "title": "Curated Route", "description": "We've mapped out the perfect taco crawl. No tourist traps, only the spots locals swear by." } },
+        { "type": "feature", "settings": { "icon": "camera", "title": "Photo Moments", "description": "Instagram-worthy stops and taco shots. Leave with memories and content for your feed." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
