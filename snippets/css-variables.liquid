@@ -12,22 +12,22 @@
     --page-width: {{ settings.max_page_width }};
     --page-margin: {{ settings.min_page_margin }}px;
 
-    --color-primary: #C8102E;
-    --color-primary-dark: #9B0D23;
-    --color-secondary: #D4A017;
-    --color-secondary-light: #E8C547;
-    --color-accent: #2D5016;
-    --color-cream: #FDF6EC;
-    --color-warm-white: #FAF5EF;
-    --color-text: #1A1A1A;
-    --color-text-muted: #6B5E50;
-    --color-border: #E8DDD0;
+    --color-bg: #FFECD2;
+    --color-text: #040404;
+    --color-text-muted: #5a5a5a;
+    --color-accent: #D4760A;
+    --color-accent-hover: #B8640A;
+    --color-border: #040404;
+    --color-border-light: rgba(4, 4, 4, 0.12);
+    --color-white: #fff;
+    --color-sold-out: #999;
+    --color-spots-ok: #2d7a2d;
+    --color-spots-low: #c0392b;
 
-    --color-background: {{ settings.background_color | default: '#FDF6EC' }};
-    --color-foreground: {{ settings.foreground_color | default: '#1A1A1A' }};
-    --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
+    --color-background: {{ settings.background_color | default: '#FFECD2' }};
+    --color-foreground: {{ settings.foreground_color | default: '#040404' }};
+    --style-border-radius-inputs: 0px;
 
-    --section-gap: 0;
     --content-max: 1200px;
   }
 {% endstyle %}
