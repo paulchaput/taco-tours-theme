@@ -24,6 +24,20 @@ html {
   box-sizing: border-box;
 }
 
+/* Focus states — visible keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
 body {
   font-family: var(--font-body);
   background-color: var(--color-bg);
@@ -386,7 +400,7 @@ a {
 }
 
 .tt-cal__filter {
-  padding: 8px 16px;
+  padding: 12px 16px;
   font-family: var(--font-body);
   font-size: 0.75rem;
   font-weight: 600;
@@ -412,8 +426,8 @@ a {
 .tt-cal__nav { display: flex; gap: 0; }
 
 .tt-cal__nav-btn {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -818,8 +832,8 @@ a {
 }
 
 .tt-modal__qty-btn {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
