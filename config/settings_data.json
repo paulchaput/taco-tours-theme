@@ -15,6 +15,13 @@
     "background_color": "#FDF6EC",
     "foreground_color": "#1A1A1A",
     "input_corner_radius": 6,
-    "content_for_index": []
+    "content_for_index": [],
+    "blocks": {
+      "16250556887416161327": {
+        "type": "shopify://apps/easy-appointment-booking/blocks/select_time/cc7b690c-65b5-4bb4-a46c-1e4bd73e1c12",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   }
 }
