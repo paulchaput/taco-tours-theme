@@ -887,6 +887,42 @@ a {
 
 .tt-modal__book-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
+/* Google Calendar link for customers */
+.tt-modal__gcal-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border-light);
+  transition: all 0.15s ease;
+}
+
+.tt-modal__gcal-link:hover {
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.tt-modal__gcal-link svg { opacity: 0.5; flex-shrink: 0; }
+
+/* Calendar loading & error states */
+.tt-cal__loading,
+.tt-cal__error {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.tt-cal__error { color: var(--color-sold-out); }
+
 /* ============================================
    FOOTER
    ============================================ */
