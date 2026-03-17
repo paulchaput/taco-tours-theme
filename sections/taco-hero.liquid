@@ -5,58 +5,71 @@
         <source src="{{ section.settings.video_url }}" type="video/mp4">
       </video>
     {% elsif section.settings.hero_image %}
-      {{ section.settings.hero_image | image_url: width: 2000 | image_tag: loading: 'eager' }}
+      {{ section.settings.hero_image | image_url: width: 2000 | image_tag: loading: 'eager', alt: 'Taco Tour CDMX' }}
+    {% else %}
+      <img src="{{ 'hero-bg.jpg' | asset_url }}" alt="Taco Tour CDMX" loading="eager">
     {% endif %}
   </div>
   <div class="tt-hero__overlay"></div>
 
   <div class="tt-hero__content">
-    <p class="tt-hero__label">{{ section.settings.label | default: 'Mexico City Taco Experience' }}</p>
-    <h1 class="tt-hero__title">{{ section.settings.title | default: 'Explore Mexico City through <em>tacos</em>' }}</h1>
-    <p class="tt-hero__description">{{ section.settings.description | default: 'Join our curated taco tour through the best taquerias of CDMX. 4 stops, 8 tacos, one unforgettable experience.' }}</p>
+    <h1 class="tt-hero__title">{{ section.settings.title | default: 'Taco Tour CDMX' }}</h1>
+    <p class="tt-hero__subtitle">{{ section.settings.subtitle | default: 'Explore Mexico City through its best tacos' }}</p>
+    <p class="tt-hero__description">{{ section.settings.description | default: 'Join Christopher Chaput as he takes you on a curated taco journey across the city. 4 stops, 8 tacos, one unforgettable ride through CDMX in our combi van.' }}</p>
 
     <div class="tt-hero__actions">
-      <a href="{{ section.settings.cta_url | default: '#book' }}" class="tt-btn tt-btn--primary tt-btn--large">
+      <a href="#calendar" class="tt-btn tt-btn--primary tt-btn--large">
         {{ section.settings.cta_text | default: 'Book Your Tour' }}
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </a>
-      <div class="tt-hero__price">
-        From <strong>${{ section.settings.price | default: '1,500' }} MXN</strong> per person
-      </div>
     </div>
 
     <div class="tt-hero__stats">
-      {% for block in section.blocks %}
-        <div {{ block.shopify_attributes }}>
-          <div class="tt-hero__stat-value">{{ block.settings.value }}</div>
-          <div class="tt-hero__stat-label">{{ block.settings.label }}</div>
-        </div>
-      {% endfor %}
+      <div class="tt-hero__stat">
+        <span class="tt-hero__stat-value">4</span>
+        <span class="tt-hero__stat-label">Taquerias</span>
+      </div>
+      <div class="tt-hero__stat">
+        <span class="tt-hero__stat-value">8</span>
+        <span class="tt-hero__stat-label">Tacos</span>
+      </div>
+      <div class="tt-hero__stat">
+        <span class="tt-hero__stat-value">$1,500</span>
+        <span class="tt-hero__stat-label">MXN / person</span>
+      </div>
+      <div class="tt-hero__stat">
+        <span class="tt-hero__stat-value">10</span>
+        <span class="tt-hero__stat-label">Max group</span>
+      </div>
     </div>
+  </div>
+
+  <div class="tt-hero__scroll-hint" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Taco Hero",
+  "name": "Hero",
   "settings": [
     {
       "type": "text",
-      "id": "label",
-      "label": "Label",
-      "default": "Mexico City Taco Experience"
-    },
-    {
-      "type": "richtext",
       "id": "title",
       "label": "Title",
-      "default": "<p>Explore Mexico City through <em>tacos</em></p>"
+      "default": "Taco Tour CDMX"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Explore Mexico City through its best tacos"
     },
     {
       "type": "textarea",
       "id": "description",
       "label": "Description",
-      "default": "Join our curated taco tour through the best taquerias of CDMX. 4 stops, 8 tacos, one unforgettable experience."
+      "default": "Join Christopher Chaput as he takes you on a curated taco journey across the city. 4 stops, 8 tacos, one unforgettable ride through CDMX in our combi van."
     },
     {
       "type": "image_picker",
@@ -71,50 +84,13 @@
     {
       "type": "text",
       "id": "cta_text",
-      "label": "CTA button text",
+      "label": "CTA text",
       "default": "Book Your Tour"
-    },
-    {
-      "type": "url",
-      "id": "cta_url",
-      "label": "CTA link"
-    },
-    {
-      "type": "text",
-      "id": "price",
-      "label": "Price display",
-      "default": "1,500"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "stat",
-      "name": "Stat",
-      "settings": [
-        {
-          "type": "text",
-          "id": "value",
-          "label": "Value",
-          "default": "4"
-        },
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Label",
-          "default": "Taquerias"
-        }
-      ]
     }
   ],
   "presets": [
     {
-      "name": "Taco Hero",
-      "blocks": [
-        { "type": "stat", "settings": { "value": "4", "label": "Taquerias" } },
-        { "type": "stat", "settings": { "value": "8", "label": "Tacos" } },
-        { "type": "stat", "settings": { "value": "3-4h", "label": "Duration" } },
-        { "type": "stat", "settings": { "value": "10", "label": "Max Group" } }
-      ]
+      "name": "Hero"
     }
   ]
 }

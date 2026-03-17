@@ -2,81 +2,15 @@
   "sections": {
     "hero": {
       "type": "taco-hero",
-      "settings": {},
-      "blocks": {
-        "stat_1": { "type": "stat", "settings": { "value": "4", "label": "Taquerias" } },
-        "stat_2": { "type": "stat", "settings": { "value": "8", "label": "Tacos" } },
-        "stat_3": { "type": "stat", "settings": { "value": "3-4h", "label": "Duration" } },
-        "stat_4": { "type": "stat", "settings": { "value": "10", "label": "Max Group" } }
-      },
-      "block_order": ["stat_1", "stat_2", "stat_3", "stat_4"]
-    },
-    "included": {
-      "type": "taco-included",
-      "settings": {},
-      "blocks": {
-        "feat_1": { "type": "feature", "settings": { "icon": "van", "title": "Combi Transport", "description": "Hop in our iconic combi van. We handle all the driving so you can enjoy the ride through CDMX." } },
-        "feat_2": { "type": "feature", "settings": { "icon": "taco", "title": "8 Tacos, 4 Stops", "description": "Two expertly chosen tacos at each of four legendary taquerias. From al pastor to regional specialties." } },
-        "feat_3": { "type": "feature", "settings": { "icon": "guide", "title": "Expert Guide", "description": "Led by Christopher Chaput, El Perrito Taquero. History, stories, and insider knowledge at every stop." } },
-        "feat_4": { "type": "feature", "settings": { "icon": "drink", "title": "Bebidas Included", "description": "Refreshing drinks at each stop. Agua fresca, horchata, or a cold cerveza to wash it all down." } },
-        "feat_5": { "type": "feature", "settings": { "icon": "map", "title": "Curated Route", "description": "We've mapped out the perfect taco crawl. No tourist traps, only the spots locals swear by." } },
-        "feat_6": { "type": "feature", "settings": { "icon": "camera", "title": "Photo Moments", "description": "Instagram-worthy stops and taco shots. Leave with memories and content for your feed." } }
-      },
-      "block_order": ["feat_1", "feat_2", "feat_3", "feat_4", "feat_5", "feat_6"]
-    },
-    "guide": {
-      "type": "taco-guide",
       "settings": {}
     },
     "calendar": {
-      "type": "taco-calendar",
-      "settings": {},
-      "blocks": {
-        "date_1": { "type": "tour_date", "settings": { "date": "Saturday, March 22", "time": "6:00 PM - 9:30 PM", "spots_left": 8 } },
-        "date_2": { "type": "tour_date", "settings": { "date": "Sunday, March 23", "time": "1:00 PM - 4:30 PM", "spots_left": 5 } },
-        "date_3": { "type": "tour_date", "settings": { "date": "Wednesday, March 26", "time": "7:00 PM - 10:30 PM", "spots_left": 10 } },
-        "date_4": { "type": "tour_date", "settings": { "date": "Saturday, March 29", "time": "6:00 PM - 9:30 PM", "spots_left": 3 } },
-        "date_5": { "type": "tour_date", "settings": { "date": "Sunday, March 30", "time": "1:00 PM - 4:30 PM", "spots_left": 10 } },
-        "date_6": { "type": "tour_date", "settings": { "date": "Saturday, April 5", "time": "6:00 PM - 9:30 PM", "spots_left": 10 } }
-      },
-      "block_order": ["date_1", "date_2", "date_3", "date_4", "date_5", "date_6"]
-    },
-    "testimonials": {
-      "type": "taco-testimonials",
-      "settings": {},
-      "blocks": {
-        "review_1": { "type": "testimonial", "settings": { "text": "I thought I knew tacos until Christopher took us to spots I never would have found. The al pastor at the second stop literally changed my life. Worth every peso.", "name": "Sarah M.", "origin": "Austin, TX", "stars": 5 } },
-        "review_2": { "type": "testimonial", "settings": { "text": "This isn't just a food tour, it's a cultural experience. Christopher knows the history behind every taqueria and every taco. My friends and I haven't stopped talking about it.", "name": "David K.", "origin": "London, UK", "stars": 5 } },
-        "review_3": { "type": "testimonial", "settings": { "text": "The combi ride alone is worth it. Add in 8 incredible tacos, great company, and Christopher's energy — this is the must-do activity in CDMX.", "name": "Ana L.", "origin": "Montreal, CA", "stars": 5 } }
-      },
-      "block_order": ["review_1", "review_2", "review_3"]
-    },
-    "faq": {
-      "type": "taco-faq",
-      "settings": {},
-      "blocks": {
-        "faq_1": { "type": "faq", "settings": { "question": "What's included in the tour?", "answer": "Everything! Transport in our combi van, 8 tacos across 4 taquerias (2 per stop), drinks at each location, and your guide Christopher sharing the history and culture behind each taco." } },
-        "faq_2": { "type": "faq", "settings": { "question": "How long does the tour last?", "answer": "The tour runs approximately 3 to 4 hours. We take our time at each stop so you can enjoy the food, the atmosphere, and the stories." } },
-        "faq_3": { "type": "faq", "settings": { "question": "Can I join if I have dietary restrictions?", "answer": "We do our best to accommodate allergies and dietary needs. Please let us know when booking, and we'll coordinate with the taquerias. Note: our tours are focused on traditional Mexican street food and options may be limited for strict dietary requirements." } },
-        "faq_4": { "type": "faq", "settings": { "question": "What's the cancellation policy?", "answer": "Full refund if you cancel 48 hours or more before the tour. Cancellations within 48 hours are non-refundable, but you can reschedule once for free." } },
-        "faq_5": { "type": "faq", "settings": { "question": "Is the tour in English or Spanish?", "answer": "Tours are conducted in English with plenty of Spanish sprinkled in for the authentic experience. Christopher is fluent in both." } },
-        "faq_6": { "type": "faq", "settings": { "question": "Where do we meet?", "answer": "You'll receive a meeting point in the confirmation email, typically a central location that's easy to reach by metro or taxi. The combi picks you up from there." } },
-        "faq_7": { "type": "faq", "settings": { "question": "Is the food safe to eat?", "answer": "All taquerias on our route are carefully selected for both quality and hygiene. Christopher personally vets every stop. That said, if you have a sensitive stomach, we recommend coming prepared just in case." } }
-      },
-      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4", "faq_5", "faq_6", "faq_7"]
-    },
-    "cta": {
-      "type": "taco-cta",
+      "type": "taco-calendar-v2",
       "settings": {}
     }
   },
   "order": [
     "hero",
-    "included",
-    "guide",
-    "calendar",
-    "testimonials",
-    "faq",
-    "cta"
+    "calendar"
   ]
 }

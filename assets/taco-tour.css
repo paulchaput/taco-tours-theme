@@ -1,5 +1,6 @@
 /* ============================================
    TACO TOUR — Global Styles
+   Inspired by Sometimes Always editorial aesthetic
    ============================================ */
 
 html {
@@ -8,9 +9,7 @@ html {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+  html { scroll-behavior: auto; }
 }
 
 body {
@@ -25,7 +24,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   color: var(--color-text);
 }
 
@@ -35,13 +34,9 @@ a {
   transition: color 0.2s ease;
 }
 
-a:hover {
-  color: var(--color-primary-dark);
-}
+a:hover { color: var(--color-primary-dark); }
 
-/* ============================================
-   Utility Classes
-   ============================================ */
+/* ─── Utilities ──────────────────────────── */
 
 .tt-container {
   width: 100%;
@@ -50,36 +45,25 @@ a:hover {
   padding: 0 24px;
 }
 
-.tt-section {
-  padding: 80px 0;
-}
+.tt-section { padding: 96px 0; }
 
 @media (max-width: 768px) {
-  .tt-section {
-    padding: 56px 0;
-  }
+  .tt-section { padding: 64px 0; }
 }
 
 .tt-section-label {
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-primary);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .tt-section-title {
-  font-size: clamp(32px, 5vw, 52px);
-  margin-bottom: 20px;
-}
-
-.tt-section-subtitle {
-  font-size: 18px;
-  line-height: 1.6;
-  color: var(--color-text-muted);
-  max-width: 560px;
+  font-size: clamp(32px, 5vw, 56px);
+  margin-bottom: 16px;
 }
 
 .tt-btn {
@@ -91,11 +75,11 @@ a:hover {
   font-family: var(--font-body);
   font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   border: none;
-  border-radius: 6px;
+  border-radius: 50px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
   text-decoration: none;
 }
 
@@ -108,26 +92,15 @@ a:hover {
   background-color: var(--color-primary-dark);
   color: #fff;
   transform: translateY(-1px);
-}
-
-.tt-btn--secondary {
-  background-color: transparent;
-  color: var(--color-text);
-  border: 1.5px solid var(--color-border);
-}
-
-.tt-btn--secondary:hover {
-  border-color: var(--color-text);
+  box-shadow: 0 4px 16px rgba(200, 16, 46, 0.2);
 }
 
 .tt-btn--large {
-  padding: 20px 40px;
+  padding: 18px 40px;
   font-size: 16px;
 }
 
-/* ============================================
-   Header
-   ============================================ */
+/* ─── Header ─────────────────────────────── */
 
 .tt-header {
   position: fixed;
@@ -136,10 +109,10 @@ a:hover {
   right: 0;
   z-index: 100;
   padding: 0 24px;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
   background-color: rgba(253, 246, 236, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .tt-header__inner {
@@ -148,21 +121,19 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 72px;
+  height: 64px;
 }
 
 .tt-header__logo {
   font-family: var(--font-heading);
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 900;
   color: var(--color-text);
   text-decoration: none;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
-.tt-header__logo span {
-  color: var(--color-primary);
-}
+.tt-header__logo span { color: var(--color-primary); }
 
 .tt-header__nav {
   display: flex;
@@ -171,20 +142,20 @@ a:hover {
 }
 
 .tt-header__nav a {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--color-text-muted);
   text-decoration: none;
   transition: color 0.2s ease;
+  letter-spacing: 0.01em;
 }
 
-.tt-header__nav a:hover {
-  color: var(--color-text);
-}
+.tt-header__nav a:hover { color: var(--color-text); }
 
 .tt-header__cta {
   padding: 10px 24px;
-  font-size: 14px;
+  font-size: 13px;
+  border-radius: 50px;
 }
 
 .tt-header__mobile-toggle {
@@ -193,31 +164,26 @@ a:hover {
   border: none;
   cursor: pointer;
   padding: 8px;
+  color: var(--color-text);
 }
 
 @media (max-width: 768px) {
-  .tt-header__nav {
-    display: none;
-  }
-
-  .tt-header__mobile-toggle {
-    display: block;
-  }
-
-  .tt-header__cta {
-    display: none;
-  }
+  .tt-header__nav { display: none; }
+  .tt-header__mobile-toggle { display: block; }
+  .tt-header__cta { display: none; }
 }
 
 /* ============================================
-   Hero Section
+   SLIDE 1: HERO
    ============================================ */
 
 .tt-hero {
   position: relative;
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
   background-color: #1A1A1A;
 }
@@ -233,7 +199,7 @@ a:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
 .tt-hero__overlay {
@@ -242,8 +208,8 @@ a:hover {
   background: linear-gradient(
     to top,
     rgba(26, 26, 26, 0.95) 0%,
-    rgba(26, 26, 26, 0.4) 50%,
-    rgba(26, 26, 26, 0.2) 100%
+    rgba(26, 26, 26, 0.3) 50%,
+    rgba(26, 26, 26, 0.15) 100%
   );
   z-index: 2;
 }
@@ -251,567 +217,664 @@ a:hover {
 .tt-hero__content {
   position: relative;
   z-index: 3;
-  max-width: var(--content-max);
-  margin: 0 auto;
+  text-align: center;
+  max-width: 720px;
   padding: 120px 24px 80px;
-  width: 100%;
-}
-
-.tt-hero__label {
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--color-secondary);
-  margin-bottom: 24px;
 }
 
 .tt-hero__title {
   font-family: var(--font-heading);
-  font-size: clamp(40px, 7vw, 80px);
+  font-size: clamp(48px, 8vw, 96px);
   font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  line-height: 1.0;
+  letter-spacing: -0.04em;
   color: #fff;
-  max-width: 700px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
-.tt-hero__title em {
+.tt-hero__subtitle {
+  font-family: var(--font-heading);
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 400;
   font-style: italic;
-  color: var(--color-secondary);
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
 }
 
 .tt-hero__description {
-  font-size: 18px;
-  line-height: 1.65;
-  color: rgba(255, 255, 255, 0.75);
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.55);
   max-width: 480px;
-  margin-bottom: 40px;
+  margin: 0 auto 40px;
 }
 
 .tt-hero__actions {
+  display: flex;
+  justify-content: center;
+}
+
+.tt-hero__stats {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  margin-top: 72px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tt-hero__stat { text-align: center; }
+
+.tt-hero__stat-value {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  display: block;
+}
+
+.tt-hero__stat-label {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 4px;
+  display: block;
+}
+
+.tt-hero__scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  color: rgba(255, 255, 255, 0.3);
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+@media (max-width: 768px) {
+  .tt-hero__stats { gap: 24px; }
+  .tt-hero__stat-value { font-size: 22px; }
+}
+
+/* ============================================
+   SLIDE 2: CALENDAR
+   ============================================ */
+
+.tt-cal {
+  background: var(--color-cream);
+  padding: 96px 0 120px;
+}
+
+.tt-cal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.tt-cal__controls {
   display: flex;
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
 }
 
-.tt-hero__price {
-  font-family: var(--font-body);
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.tt-hero__price strong {
-  font-size: 18px;
-  color: #fff;
-  font-weight: 600;
-}
-
-.tt-hero__stats {
+.tt-cal__filters {
   display: flex;
-  gap: 48px;
-  margin-top: 64px;
-  padding-top: 32px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  gap: 4px;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 50px;
+  padding: 4px;
 }
 
-.tt-hero__stat-value {
-  font-family: var(--font-heading);
-  font-size: 32px;
-  font-weight: 700;
+.tt-cal__filter {
+  padding: 8px 16px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: none;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tt-cal__filter:hover {
+  color: var(--color-text);
+}
+
+.tt-cal__filter--active {
+  background: var(--color-text);
   color: #fff;
 }
 
-.tt-hero__stat-label {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
-  margin-top: 4px;
+.tt-cal__nav {
+  display: flex;
+  gap: 4px;
 }
 
-@media (max-width: 768px) {
-  .tt-hero__stats {
-    gap: 32px;
-    margin-top: 48px;
-  }
-
-  .tt-hero__stat-value {
-    font-size: 24px;
-  }
-}
-
-/* ============================================
-   Included Section
-   ============================================ */
-
-.tt-included {
-  background-color: var(--color-cream);
-}
-
-.tt-included__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 48px;
-}
-
-.tt-included__item {
-  background: #fff;
-  border-radius: 12px;
-  padding: 36px 28px;
-  border: 1px solid var(--color-border);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.tt-included__item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(26, 26, 26, 0.06);
-}
-
-.tt-included__icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
-  background: var(--color-cream);
+.tt-cal__nav-btn {
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-text);
 }
 
-.tt-included__icon svg {
-  width: 24px;
-  height: 24px;
-  color: var(--color-primary);
+.tt-cal__nav-btn:hover {
+  border-color: var(--color-text);
 }
 
-.tt-included__item-title {
-  font-family: var(--font-heading);
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.tt-included__item-desc {
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--color-text-muted);
-}
-
-@media (max-width: 768px) {
-  .tt-included__grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-}
-
-/* ============================================
-   Guide Section
-   ============================================ */
-
-.tt-guide {
-  background-color: var(--color-warm-white);
-}
-
-.tt-guide__inner {
+/* Weekday headers */
+.tt-cal__weekdays {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  align-items: center;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  margin-bottom: 1px;
 }
 
-.tt-guide__image {
+.tt-cal__weekdays > div {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: 12px 0;
+}
+
+/* Calendar grid */
+.tt-cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: 16px;
   overflow: hidden;
-  aspect-ratio: 4 / 5;
 }
 
-.tt-guide__image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.tt-cal__day {
+  background: #fff;
+  min-height: 120px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.tt-guide__name {
-  font-size: clamp(28px, 4vw, 44px);
+.tt-cal__day--empty {
+  background: var(--color-warm-white);
+}
+
+.tt-cal__day--past {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.tt-cal__day--today .tt-cal__day-number {
+  background: var(--color-primary);
+  color: #fff;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tt-cal__day-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
   margin-bottom: 4px;
 }
 
-.tt-guide__handle {
-  font-size: 16px;
-  color: var(--color-primary);
-  font-weight: 500;
-  margin-bottom: 24px;
-}
-
-.tt-guide__bio {
-  font-size: 16px;
-  line-height: 1.7;
-  color: var(--color-text-muted);
-  margin-bottom: 32px;
-}
-
-.tt-guide__social {
+.tt-cal__day-tours {
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
 }
 
-.tt-guide__social-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 16px;
-  border: 1.5px solid var(--color-border);
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--color-text);
-  transition: border-color 0.2s ease;
-  cursor: pointer;
-}
-
-.tt-guide__social-link:hover {
-  border-color: var(--color-text);
-  color: var(--color-text);
-}
-
-.tt-guide__social-link svg {
-  width: 18px;
-  height: 18px;
-}
-
-@media (max-width: 768px) {
-  .tt-guide__inner {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .tt-guide__image {
-    aspect-ratio: 1 / 1;
-    max-width: 320px;
-  }
-}
-
-/* ============================================
-   Calendar / Booking Section
-   ============================================ */
-
-.tt-calendar {
-  background-color: var(--color-cream);
-}
-
-.tt-calendar__inner {
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 48px;
-  margin-top: 48px;
-  align-items: start;
-}
-
-.tt-calendar__info-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 36px;
-  border: 1px solid var(--color-border);
-  position: sticky;
-  top: 96px;
-}
-
-.tt-calendar__info-title {
-  font-family: var(--font-heading);
-  font-size: 24px;
-  margin-bottom: 24px;
-}
-
-.tt-calendar__info-row {
+/* Tour chips inside calendar cells */
+.tt-cal__tour-chip {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--color-border);
-  font-size: 15px;
+  padding: 6px 10px;
+  background: var(--color-cream);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-body);
+  text-align: left;
+  width: 100%;
 }
 
-.tt-calendar__info-row:last-of-type {
-  border-bottom: none;
+.tt-cal__tour-chip:hover {
+  border-color: var(--color-primary);
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(200, 16, 46, 0.08);
 }
 
-.tt-calendar__info-label {
-  color: var(--color-text-muted);
-}
-
-.tt-calendar__info-value {
+.tt-cal__tour-name {
+  font-size: 12px;
   font-weight: 600;
   color: var(--color-text);
 }
 
-.tt-calendar__price-total {
-  font-family: var(--font-heading);
-  font-size: 36px;
-  font-weight: 700;
-  color: var(--color-text);
-  margin-top: 24px;
-  margin-bottom: 4px;
+.tt-cal__tour-spots {
+  font-size: 11px;
+  color: var(--color-accent);
+  font-weight: 500;
 }
 
-.tt-calendar__price-note {
-  font-size: 14px;
+.tt-cal__tour-chip--low .tt-cal__tour-spots {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.tt-cal__tour-chip--sold-out {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tt-cal__tour-chip--sold-out .tt-cal__tour-spots {
   color: var(--color-text-muted);
+}
+
+/* Mobile: hide grid, show list */
+.tt-cal__list { display: none; }
+
+@media (max-width: 768px) {
+  .tt-cal__grid { display: none; }
+  .tt-cal__weekdays { display: none; }
+  .tt-cal__list { display: block; }
+
+  .tt-cal__filters {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .tt-cal__filter { white-space: nowrap; }
+}
+
+/* Mobile list view */
+.tt-cal__list-day {
   margin-bottom: 24px;
 }
 
-.tt-calendar__book-btn {
-  width: 100%;
-}
-
-.tt-calendar__dates {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-}
-
-.tt-calendar__date-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 24px;
-  border: 1.5px solid var(--color-border);
-  cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.tt-calendar__date-card:hover {
-  border-color: var(--color-primary);
-  box-shadow: 0 4px 12px rgba(200, 16, 46, 0.08);
-}
-
-.tt-calendar__date-day {
+.tt-cal__list-date {
   font-family: var(--font-heading);
   font-size: 18px;
   font-weight: 700;
-  margin-bottom: 4px;
-}
-
-.tt-calendar__date-time {
-  font-size: 14px;
-  color: var(--color-text-muted);
   margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border);
 }
 
-.tt-calendar__date-spots {
+.tt-cal__list-tours {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tt-cal__list-card {
+  display: block;
+  width: 100%;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-body);
+  text-align: left;
+}
+
+.tt-cal__list-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 12px rgba(200, 16, 46, 0.06);
+}
+
+.tt-cal__list-card--sold-out {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tt-cal__list-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.tt-cal__list-card-top strong {
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+.tt-cal__list-card-time {
   font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.tt-cal__list-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tt-cal__list-card-route {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.tt-cal__list-card-spots {
+  font-size: 12px;
   font-weight: 600;
   color: var(--color-accent);
 }
 
-.tt-calendar__date-spots--low {
+.tt-cal__list-card-spots--low {
   color: var(--color-primary);
 }
 
-@media (max-width: 768px) {
-  .tt-calendar__inner {
-    grid-template-columns: 1fr;
-  }
+.tt-cal__list-card-spots--sold-out {
+  color: var(--color-text-muted);
+}
 
-  .tt-calendar__info-card {
-    position: static;
-    order: -1;
-  }
+.tt-cal__empty {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: 48px 0;
+  font-size: 15px;
 }
 
 /* ============================================
-   Testimonials
+   MODAL
    ============================================ */
 
-.tt-testimonials {
-  background-color: var(--color-text);
-  color: #fff;
-}
-
-.tt-testimonials .tt-section-label {
-  color: var(--color-secondary);
-}
-
-.tt-testimonials .tt-section-title {
-  color: #fff;
-}
-
-.tt-testimonials .tt-section-subtitle {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.tt-testimonials__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 48px;
-}
-
-.tt-testimonial-card {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 32px;
-}
-
-.tt-testimonial-card__stars {
-  color: var(--color-secondary);
-  font-size: 16px;
-  letter-spacing: 2px;
-  margin-bottom: 16px;
-}
-
-.tt-testimonial-card__text {
-  font-size: 15px;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 24px;
-  font-style: italic;
-}
-
-.tt-testimonial-card__author {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.tt-testimonial-card__avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
+.tt-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
-  font-size: 14px;
-  color: var(--color-secondary);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.tt-testimonial-card__name {
-  font-weight: 600;
-  font-size: 14px;
+.tt-modal--open {
+  opacity: 1;
+  visibility: visible;
 }
 
-.tt-testimonial-card__origin {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.4);
+.tt-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.6);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
 }
 
-@media (max-width: 768px) {
-  .tt-testimonials__grid {
-    grid-template-columns: 1fr;
-  }
+.tt-modal__content {
+  position: relative;
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px;
+  max-width: 480px;
+  width: calc(100% - 32px);
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: translateY(16px);
+  transition: transform 0.3s ease;
 }
 
-/* ============================================
-   FAQ
-   ============================================ */
-
-.tt-faq {
-  background-color: var(--color-cream);
+.tt-modal--open .tt-modal__content {
+  transform: translateY(0);
 }
 
-.tt-faq__inner {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 64px;
-  align-items: start;
-}
-
-.tt-faq__list {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.tt-faq__item {
-  border-bottom: 1px solid var(--color-border);
-}
-
-.tt-faq__question {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 0;
+.tt-modal__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
   background: none;
   border: none;
-  font-family: var(--font-body);
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--color-text);
   cursor: pointer;
-  text-align: left;
-}
-
-.tt-faq__question:hover {
-  color: var(--color-primary);
-}
-
-.tt-faq__question svg {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
   color: var(--color-text-muted);
+  padding: 4px;
+  border-radius: 8px;
+  transition: color 0.2s ease;
 }
 
-.tt-faq__item[open] .tt-faq__question svg {
-  transform: rotate(45deg);
-}
+.tt-modal__close:hover { color: var(--color-text); }
 
-.tt-faq__answer {
-  padding: 0 0 20px;
-  font-size: 15px;
-  line-height: 1.7;
-  color: var(--color-text-muted);
-}
-
-@media (max-width: 768px) {
-  .tt-faq__inner {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-}
-
-/* ============================================
-   CTA Banner
-   ============================================ */
-
-.tt-cta {
-  background: var(--color-primary);
-  color: #fff;
-  text-align: center;
-}
-
-.tt-cta__title {
-  font-size: clamp(28px, 4vw, 48px);
-  color: #fff;
+.tt-modal__badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 50px;
   margin-bottom: 16px;
 }
 
-.tt-cta__subtitle {
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 32px;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
+.tt-modal__badge--street {
+  background: var(--color-cream);
+  color: var(--color-accent);
 }
 
-.tt-cta .tt-btn--primary {
-  background: #fff;
+.tt-modal__badge--premium {
+  background: #FEF3C7;
+  color: #92400E;
+}
+
+.tt-modal__title {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.tt-modal__details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tt-modal__detail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.tt-modal__detail svg {
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+/* Tour stops */
+.tt-modal__route-stops {
+  margin-bottom: 24px;
+}
+
+.tt-modal__stops-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 16px;
+}
+
+.tt-modal__stop {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 10px 0;
+  position: relative;
+}
+
+.tt-modal__stop:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 36px;
+  bottom: -4px;
+  width: 1px;
+  background: var(--color-border);
+}
+
+.tt-modal__stop-number {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
   color: var(--color-primary);
+  flex-shrink: 0;
 }
 
-.tt-cta .tt-btn--primary:hover {
+.tt-modal__stop-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.tt-modal__stop-taco {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+/* Price */
+.tt-modal__price {
+  padding: 20px 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 20px;
+}
+
+.tt-modal__price-amount {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-text);
+  display: block;
+}
+
+.tt-modal__price-note {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+  display: block;
+}
+
+/* Ticket qty */
+.tt-modal__tickets {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.tt-modal__tickets-label {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.tt-modal__qty {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.tt-modal__qty-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--color-text);
+  transition: background 0.15s ease;
+}
+
+.tt-modal__qty-btn:hover {
   background: var(--color-cream);
 }
 
+.tt-modal__qty-input {
+  width: 48px;
+  text-align: center;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  background: none;
+  -moz-appearance: textfield;
+}
+
+.tt-modal__qty-input::-webkit-inner-spin-button,
+.tt-modal__qty-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.tt-modal__book-btn {
+  width: 100%;
+  font-size: 15px;
+}
+
+.tt-modal__book-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* ============================================
-   Footer
+   FOOTER
    ============================================ */
 
 .tt-footer {
@@ -844,21 +907,19 @@ a:hover {
 }
 
 .tt-footer__links a {
-  font-size: 14px;
+  font-size: 13px;
   color: rgba(255, 255, 255, 0.5);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
-.tt-footer__links a:hover {
-  color: #fff;
-}
+.tt-footer__links a:hover { color: #fff; }
 
 .tt-footer__copy {
-  font-size: 13px;
+  font-size: 12px;
   width: 100%;
   text-align: center;
   margin-top: 32px;
   padding-top: 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }

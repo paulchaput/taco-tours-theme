@@ -1,0 +1,115 @@
+<section class="tt-cal full-width" id="calendar">
+  <div class="tt-container">
+
+    {%- comment -%} Header: month nav + filters {%- endcomment -%}
+    <div class="tt-cal__header">
+      <div class="tt-cal__header-left">
+        <p class="tt-section-label">Book your spot</p>
+        <h2 class="tt-section-title" id="cal-month-title">Loading...</h2>
+      </div>
+      <div class="tt-cal__controls">
+        <div class="tt-cal__filters">
+          <button class="tt-cal__filter tt-cal__filter--active" data-filter="all">All Tours</button>
+          <button class="tt-cal__filter" data-filter="morning">Morning</button>
+          <button class="tt-cal__filter" data-filter="night">Night</button>
+          <button class="tt-cal__filter" data-filter="street">Street Tacos</button>
+          <button class="tt-cal__filter" data-filter="premium">Premium</button>
+        </div>
+        <div class="tt-cal__nav">
+          <button class="tt-cal__nav-btn" id="cal-prev" aria-label="Previous month">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <button class="tt-cal__nav-btn" id="cal-next" aria-label="Next month">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Calendar grid {%- endcomment -%}
+    <div class="tt-cal__weekdays">
+      <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+    </div>
+    <div class="tt-cal__grid" id="cal-grid">
+      <!-- JS renders day cells here -->
+    </div>
+
+    {%- comment -%} Mobile: list view fallback {%- endcomment -%}
+    <div class="tt-cal__list" id="cal-list">
+      <!-- JS renders tour list here for mobile -->
+    </div>
+
+  </div>
+
+  {%- comment -%} Tour detail modal {%- endcomment -%}
+  <div class="tt-modal" id="tour-modal" aria-hidden="true">
+    <div class="tt-modal__backdrop" data-close-modal></div>
+    <div class="tt-modal__content">
+      <button class="tt-modal__close" data-close-modal aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+      <div class="tt-modal__badge" id="modal-badge"></div>
+      <h3 class="tt-modal__title" id="modal-title"></h3>
+      <div class="tt-modal__details">
+        <div class="tt-modal__detail">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+          <span id="modal-date"></span>
+        </div>
+        <div class="tt-modal__detail">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span id="modal-time"></span>
+        </div>
+        <div class="tt-modal__detail">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span id="modal-route"></span>
+        </div>
+        <div class="tt-modal__detail">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span id="modal-spots"></span>
+        </div>
+      </div>
+
+      <div class="tt-modal__route-stops" id="modal-stops"></div>
+
+      <div class="tt-modal__price">
+        <span class="tt-modal__price-amount">$1,500 MXN</span>
+        <span class="tt-modal__price-note">per person, all inclusive</span>
+      </div>
+
+      <div class="tt-modal__tickets">
+        <label class="tt-modal__tickets-label" for="ticket-qty">Tickets</label>
+        <div class="tt-modal__qty">
+          <button class="tt-modal__qty-btn" id="qty-minus" aria-label="Decrease">-</button>
+          <input type="number" id="ticket-qty" class="tt-modal__qty-input" value="1" min="1" max="10">
+          <button class="tt-modal__qty-btn" id="qty-plus" aria-label="Increase">+</button>
+        </div>
+      </div>
+
+      <button class="tt-btn tt-btn--primary tt-btn--large tt-modal__book-btn" id="modal-book-btn">
+        Add to Cart
+      </button>
+    </div>
+  </div>
+</section>
+
+{{ 'taco-calendar.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+  "name": "Tour Calendar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "collection_handle",
+      "label": "Tours collection handle",
+      "default": "taco-tours",
+      "info": "Create a collection with all tour products"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tour Calendar"
+    }
+  ]
+}
+{% endschema %}
