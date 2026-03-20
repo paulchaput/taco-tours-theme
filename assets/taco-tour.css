@@ -366,7 +366,7 @@ a {
 }
 
 /* ============================================
-   CALENDAR — warm bg, zero radius
+   CALENDAR — warm bg, zero radius, gym-class style
    ============================================ */
 
 .tt-cal {
@@ -375,55 +375,18 @@ a {
 }
 
 .tt-cal__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
   margin-bottom: 40px;
-  flex-wrap: wrap;
-  gap: 20px;
 }
 
 .tt-cal__header-left .tt-section-title { margin-bottom: 0; }
 
-.tt-cal__controls {
+/* Month row — title between arrows */
+.tt-cal__month-row {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 12px;
 }
-
-/* Filter bar — square, outlined */
-.tt-cal__filters {
-  display: flex;
-  gap: 0;
-  border: 1px solid var(--color-text);
-}
-
-.tt-cal__filter {
-  padding: 12px 16px;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--color-text);
-  background: transparent;
-  border: none;
-  border-right: 1px solid var(--color-border-light);
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.tt-cal__filter:last-child { border-right: none; }
-.tt-cal__filter:hover { background: rgba(4, 4, 4, 0.05); }
-
-.tt-cal__filter--active {
-  background: var(--color-text);
-  color: var(--color-bg);
-}
-
-/* Month nav */
-.tt-cal__nav { display: flex; gap: 0; }
 
 .tt-cal__nav-btn {
   width: 44px;
@@ -437,9 +400,8 @@ a {
   cursor: pointer;
   transition: all 0.15s ease;
   color: var(--color-text);
+  flex-shrink: 0;
 }
-
-.tt-cal__nav-btn + .tt-cal__nav-btn { border-left: none; }
 
 .tt-cal__nav-btn:hover {
   background: var(--color-text);
@@ -467,7 +429,7 @@ a {
 
 .tt-cal__weekdays > div:last-child { border-right: none; }
 
-/* Calendar grid — hard edges, borders */
+/* Calendar grid */
 .tt-cal__grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -476,27 +438,34 @@ a {
 
 .tt-cal__day {
   background: var(--color-bg);
-  min-height: 110px;
+  min-height: 100px;
   padding: 8px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: flex-start;
+  gap: 6px;
   border-right: 1px solid var(--color-border-light);
   border-bottom: 1px solid var(--color-border-light);
-  transition: background 0.1s ease;
+  transition: background 0.15s ease;
 }
 
 .tt-cal__day:nth-child(7n) { border-right: none; }
-
-.tt-cal__day--has-tours:hover { background: rgba(255, 255, 255, 0.3); }
 .tt-cal__day--empty { background: rgba(4, 4, 4, 0.03); }
 .tt-cal__day--past { opacity: 0.3; pointer-events: none; }
+
+.tt-cal__day--has-tours {
+  cursor: pointer;
+}
+
+.tt-cal__day--has-tours:hover {
+  background: var(--color-accent);
+}
 
 .tt-cal__day--today .tt-cal__day-number {
   background: var(--color-text);
   color: var(--color-bg);
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -506,139 +475,239 @@ a {
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--color-text);
-  margin-bottom: 2px;
 }
 
-.tt-cal__day-tours {
+/* Tour indicator dots */
+.tt-cal__day-indicator {
   display: flex;
-  flex-direction: column;
-  gap: 3px;
-  flex: 1;
+  gap: 4px;
 }
 
-/* Tour chips — square, editorial */
-.tt-cal__tour-chip {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 4px 6px;
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid transparent;
-  border-radius: 0;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  font-family: var(--font-body);
-  text-align: left;
-  width: 100%;
+.tt-cal__dot {
+  width: 7px;
+  height: 7px;
+  background: var(--color-spots-ok);
+  display: block;
 }
 
-.tt-cal__tour-chip:hover {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-}
+.tt-cal__dot--low { background: var(--color-spots-low); }
+.tt-cal__dot--sold-out { background: var(--color-sold-out); }
 
-.tt-cal__tour-chip:hover .tt-cal__tour-name,
-.tt-cal__tour-chip:hover .tt-cal__tour-spots {
-  color: var(--color-text);
-}
-
-.tt-cal__tour-name {
+.tt-cal__day-count {
   font-size: 0.65rem;
   font-weight: 700;
-  color: var(--color-text);
   text-transform: uppercase;
   letter-spacing: 0.03em;
+  color: var(--color-text-muted);
+  margin-top: auto;
 }
 
-.tt-cal__tour-spots {
-  font-size: 0.6rem;
-  color: var(--color-spots-ok);
+/* ============================================
+   DAY ZOOM VIEW — gym schedule style
+   ============================================ */
+
+.tt-day__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 24px;
+  transition: color 0.15s ease;
+}
+
+.tt-day__back:hover { color: var(--color-text); }
+
+.tt-day__title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
   font-weight: 700;
+  margin-bottom: 28px;
+  line-height: 1.1;
 }
 
-.tt-cal__tour-chip--low .tt-cal__tour-spots { color: var(--color-spots-low); }
-
-.tt-cal__tour-chip--sold-out {
-  opacity: 0.35;
-  cursor: not-allowed;
+.tt-day__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
-.tt-cal__tour-chip--sold-out .tt-cal__tour-spots { color: var(--color-sold-out); }
-
-/* Mobile list */
-.tt-cal__list { display: none; }
-
-@media (max-width: 750px) {
-  .tt-cal__grid, .tt-cal__weekdays { display: none; }
-  .tt-cal__list { display: block; }
-  .tt-cal__filters { flex-wrap: nowrap; overflow-x: auto; }
-  .tt-cal__filter { white-space: nowrap; flex-shrink: 0; }
+/* Tour card — horizontal row like a gym class */
+.tt-day__card {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--color-text);
+  border-bottom: none;
+  transition: background 0.15s ease;
 }
 
-.tt-cal__list-day { margin-bottom: 28px; }
+.tt-day__card:last-child { border-bottom: 1px solid var(--color-text); }
 
-.tt-cal__list-date {
+.tt-day__card--sold-out { opacity: 0.35; }
+
+/* Time column */
+.tt-day__time {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 24px;
+  border-right: 1px solid var(--color-border-light);
+  min-width: 100px;
+  flex-shrink: 0;
+}
+
+.tt-day__time-start {
   font-family: var(--font-heading);
   font-size: 1.1rem;
   font-weight: 700;
-  margin-bottom: 10px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--color-text);
+  line-height: 1.2;
 }
 
-.tt-cal__list-tours { display: flex; flex-direction: column; gap: 0; }
-
-/* Mobile tour cards — edge to edge, square */
-.tt-cal__list-card {
-  display: block;
-  width: 100%;
-  background: transparent;
-  border: 1px solid var(--color-text);
-  border-bottom: none;
-  border-radius: 0;
-  padding: 14px 16px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  font-family: var(--font-body);
-  text-align: left;
+.tt-day__time-end {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
 }
 
-.tt-cal__list-card:last-child { border-bottom: 1px solid var(--color-text); }
-
-.tt-cal__list-card:hover {
-  background: var(--color-accent);
-}
-
-.tt-cal__list-card--sold-out { opacity: 0.35; cursor: not-allowed; }
-.tt-cal__list-card--sold-out:hover { background: transparent; }
-
-.tt-cal__list-card-top {
+/* Info column */
+.tt-day__info {
+  flex: 1;
+  padding: 20px 24px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 4px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
 }
 
-.tt-cal__list-card-top strong {
-  font-size: 0.9rem;
+.tt-day__name {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.tt-day__route {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.tt-day__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.tt-day__badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border: 1px solid;
+}
+
+.tt-day__badge--street { border-color: var(--color-spots-ok); color: var(--color-spots-ok); }
+.tt-day__badge--premium { border-color: var(--color-accent); color: var(--color-accent); }
+
+.tt-day__stops-count {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+/* Action column */
+.tt-day__action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 28px;
+  border-left: 1px solid var(--color-border-light);
+  min-width: 110px;
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+.tt-day__spots {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-spots-ok);
+}
+
+.tt-day__spots--low { color: var(--color-spots-low); }
+
+.tt-day__sold-out {
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
+  color: var(--color-sold-out);
 }
 
-.tt-cal__list-card-time { font-size: 0.8rem; color: var(--color-text-muted); }
-
-.tt-cal__list-card-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.tt-day__book-btn {
+  padding: 10px 24px;
+  background: var(--color-text);
+  color: var(--color-bg);
+  border: 1px solid var(--color-text);
+  border-radius: 0;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
-.tt-cal__list-card-route { font-size: 0.8rem; color: var(--color-text-muted); }
-.tt-cal__list-card-spots { font-size: 0.75rem; font-weight: 700; color: var(--color-spots-ok); }
-.tt-cal__list-card-spots--low { color: var(--color-spots-low); }
-.tt-cal__list-card-spots--sold-out { color: var(--color-sold-out); }
+.tt-day__book-btn:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
 
+/* Mobile adjustments */
+@media (max-width: 750px) {
+  .tt-cal__day { min-height: 70px; padding: 6px; }
+  .tt-cal__day-count { display: none; }
+
+  .tt-day__card {
+    flex-wrap: wrap;
+  }
+
+  .tt-day__time {
+    min-width: auto;
+    padding: 14px 16px;
+    flex-direction: row;
+    gap: 6px;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border-light);
+    justify-content: flex-start;
+  }
+
+  .tt-day__info {
+    padding: 14px 16px;
+    width: 100%;
+  }
+
+  .tt-day__action {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--color-border-light);
+    padding: 14px 16px;
+  }
+}
+
+/* Calendar empty state */
 .tt-cal__empty {
   text-align: center;
   color: var(--color-text-muted);
