@@ -1,14 +1,12 @@
 /**
  * Taco Tour Calendar
- * Source of truth: Google Calendar (admin manages tours there)
+ * Source of truth: Shopify Metaobjects (admin manages tours there)
  * Checkout: Shopify AJAX Cart (single generic ticket product + line item properties)
- * Customer perk: "Add to Google Calendar" link per tour
  */
 
 (function () {
   'use strict';
 
-  // ─── State ──────────────────────────────────────────────
   var currentMonth = new Date().getMonth();
   var currentYear = new Date().getFullYear();
   var activeFilter = 'all';
@@ -16,7 +14,6 @@
   var selectedTour = null;
   var config = {};
 
-  // ─── Load config from Liquid ────────────────────────────
   function loadConfig() {
     var el = document.getElementById('taco-calendar-config');
     if (!el) return {};
@@ -28,174 +25,7 @@
     }
   }
 
-  // ─── Google Calendar API ────────────────────────────────
-  function fetchTours(year, month) {
-    if (!config.googleCalendarId || !config.googleApiKey) {
-      showError('Calendar not configured. Add your Google Calendar ID and API Key in the theme editor.');
-      return Promise.resolve([]);
-    }
-
-    // Fetch a 3-month window around the current month for smooth navigation
-    var timeMin = new Date(year, month - 1, 1).toISOString();
-    var timeMax = new Date(year, month + 2, 0, 23, 59, 59).toISOString();
-
-    var url =
-      'https://www.googleapis.com/calendar/v3/calendars/' +
-      encodeURIComponent(config.googleCalendarId) +
-      '/events?key=' + encodeURIComponent(config.googleApiKey) +
-      '&timeMin=' + encodeURIComponent(timeMin) +
-      '&timeMax=' + encodeURIComponent(timeMax) +
-      '&singleEvents=true' +
-      '&orderBy=startTime' +
-      '&maxResults=100' +
-      '&timeZone=' + encodeURIComponent(config.timezone || 'America/Mexico_City');
-
-    return fetch(url)
-      .then(function (res) {
-        if (!res.ok) {
-          return res.json().then(function (data) {
-            throw new Error(data.error ? data.error.message : 'Calendar API error');
-          });
-        }
-        return res.json();
-      })
-      .then(function (data) {
-        return (data.items || []).map(parseGoogleEvent).filter(Boolean);
-      })
-      .catch(function (err) {
-        console.error('Taco Calendar: fetch error', err);
-        showError('Could not load tours. Please try again later.');
-        return [];
-      });
-  }
-
-  // ─── Parse Google Calendar event → tour object ──────────
-  function parseGoogleEvent(event) {
-    if (!event.start || event.status === 'cancelled') return null;
-
-    var startDt = event.start.dateTime || event.start.date;
-    var endDt = event.end ? (event.end.dateTime || event.end.date) : startDt;
-
-    var startDate = new Date(startDt);
-    var endDate = new Date(endDt);
-
-    // Date string YYYY-MM-DD
-    var dateStr =
-      startDate.getFullYear() + '-' +
-      String(startDate.getMonth() + 1).padStart(2, '0') + '-' +
-      String(startDate.getDate()).padStart(2, '0');
-
-    // Time string
-    var timeStart = formatTime(startDate);
-    var timeEnd = formatTime(endDate);
-    var timeLabel = timeStart + ' - ' + timeEnd;
-
-    // Parse title: "Tour A — Ruta Roma-Condesa" or just "Ruta Roma-Condesa"
-    var title = event.summary || 'Tour';
-    var tourName = title;
-    var routeName = title;
-
-    if (title.indexOf('—') > -1) {
-      var parts = title.split('—');
-      tourName = parts[0].trim();
-      routeName = parts[1].trim();
-    } else if (title.indexOf('-') > -1 && title.indexOf('- ') > -1) {
-      var parts2 = title.split(' - ');
-      if (parts2.length === 2) {
-        tourName = parts2[0].trim();
-        routeName = parts2[1].trim();
-      }
-    }
-
-    // Parse description for structured data
-    var desc = event.description || '';
-    var parsed = parseDescription(desc);
-
-    // Determine period from hour
-    var hour = startDate.getHours();
-    var period = parsed.period || (hour < 15 ? 'morning' : 'night');
-
-    return {
-      id: event.id,
-      googleEventId: event.id,
-      date: dateStr,
-      time: timeLabel,
-      startIso: startDt,
-      endIso: endDt,
-      period: period,
-      tourName: tourName,
-      routeName: routeName,
-      routeType: parsed.type || 'street',
-      stops: parsed.stops || [],
-      capacity: parsed.capacity || 10,
-      remainingSpots: Math.max(0, (parsed.capacity || 10) - (parsed.booked || 0)),
-      location: event.location || '',
-      description: desc
-    };
-  }
-
-  // ─── Parse structured description ───────────────────────
-  //
-  // Expected format in Google Calendar event description:
-  //
-  //   type: street
-  //   period: night
-  //   capacity: 10
-  //   booked: 3
-  //   stops:
-  //   Tacos Orinoco | Bistek con queso
-  //   El Vilsito | Suadero nocturno
-  //
-  function parseDescription(text) {
-    var result = { stops: [] };
-    if (!text) return result;
-
-    // Strip HTML tags (Google Calendar sometimes wraps in HTML)
-    text = text.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '');
-
-    var lines = text.split('\n');
-    var inStops = false;
-
-    for (var i = 0; i < lines.length; i++) {
-      var line = lines[i].trim();
-      if (!line) continue;
-
-      if (line.toLowerCase().startsWith('type:')) {
-        result.type = line.split(':').slice(1).join(':').trim().toLowerCase();
-        inStops = false;
-      } else if (line.toLowerCase().startsWith('period:')) {
-        result.period = line.split(':').slice(1).join(':').trim().toLowerCase();
-        inStops = false;
-      } else if (line.toLowerCase().startsWith('capacity:')) {
-        result.capacity = parseInt(line.split(':')[1].trim(), 10) || 10;
-        inStops = false;
-      } else if (line.toLowerCase().startsWith('booked:')) {
-        result.booked = parseInt(line.split(':')[1].trim(), 10) || 0;
-        inStops = false;
-      } else if (line.toLowerCase().startsWith('stops:')) {
-        inStops = true;
-      } else if (inStops && line.indexOf('|') > -1) {
-        var stopParts = line.split('|');
-        result.stops.push({
-          name: stopParts[0].trim(),
-          taco: stopParts[1] ? stopParts[1].trim() : ''
-        });
-      }
-    }
-
-    return result;
-  }
-
-  function formatTime(date) {
-    var h = date.getHours();
-    var m = date.getMinutes();
-    var ampm = h >= 12 ? 'PM' : 'AM';
-    h = h % 12;
-    if (h === 0) h = 12;
-    return h + ':' + String(m).padStart(2, '0') + ' ' + ampm;
-  }
-
-  // ─── Shopify Cart (single product + line item properties) ─
+  // ─── Shopify Cart ─────────────────────────────────────
   function addToCart(tour, quantity) {
     if (!config.ticketVariantId) {
       alert('Checkout not configured. Please contact us to book.');
@@ -208,7 +38,6 @@
       btn.disabled = true;
     }
 
-    // Line item properties — these show in cart & order confirmation
     var properties = {
       'Tour': tour.tourName,
       'Route': tour.routeName,
@@ -265,38 +94,7 @@
       .catch(function () {});
   }
 
-  // ─── Google Calendar link for customers ─────────────────
-  function buildGoogleCalendarUrl(tour) {
-    // Format dates for Google Calendar URL: YYYYMMDDTHHMMSS
-    var start = tour.startIso.replace(/[-:]/g, '').replace(/\.\d+/, '');
-    var end = tour.endIso.replace(/[-:]/g, '').replace(/\.\d+/, '');
-
-    // If timezone offset present, keep it; otherwise use local
-    var dates = start + '/' + end;
-
-    var details = 'Taco Tour: ' + tour.routeName;
-    if (tour.stops.length > 0) {
-      details += '\n\nStops:\n';
-      tour.stops.forEach(function (s, i) {
-        details += (i + 1) + '. ' + s.name;
-        if (s.taco) details += ' — ' + s.taco;
-        details += '\n';
-      });
-    }
-
-    var params = [
-      'action=TEMPLATE',
-      'text=' + encodeURIComponent(tour.tourName + ' — ' + tour.routeName),
-      'dates=' + encodeURIComponent(dates),
-      'details=' + encodeURIComponent(details),
-      'location=' + encodeURIComponent(tour.location || tour.routeName),
-      'ctz=' + encodeURIComponent(config.timezone || 'America/Mexico_City')
-    ];
-
-    return 'https://calendar.google.com/calendar/render?' + params.join('&');
-  }
-
-  // ─── Render Calendar ───────────────────────────────────
+  // ─── Render Calendar ─────────────────────────────────
   function renderCalendar() {
     var grid = document.getElementById('cal-grid');
     var list = document.getElementById('cal-list');
@@ -310,13 +108,12 @@
 
     title.textContent = monthNames[currentMonth] + ' ' + currentYear;
 
-    // Filter tours for this month
     var prefix = currentYear + '-' + String(currentMonth + 1).padStart(2, '0');
     var today = new Date();
     today.setHours(0, 0, 0, 0);
 
     var filtered = allTours.filter(function (t) {
-      if (!t.date.startsWith(prefix)) return false;
+      if (!t.date || !t.date.startsWith(prefix)) return false;
       if (activeFilter === 'all') return true;
       if (activeFilter === 'morning') return t.period === 'morning';
       if (activeFilter === 'night') return t.period === 'night';
@@ -325,7 +122,6 @@
       return true;
     });
 
-    // Build grid
     var firstDay = new Date(currentYear, currentMonth, 1).getDay();
     var daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
@@ -446,7 +242,7 @@
     });
   }
 
-  // ─── Modal ─────────────────────────────────────────────
+  // ─── Modal ───────────────────────────────────────────
   function openModal(tour) {
     selectedTour = tour;
     var modal = document.getElementById('tour-modal');
@@ -471,7 +267,6 @@
     document.getElementById('modal-spots').textContent =
       tour.remainingSpots + ' of ' + tour.capacity + ' spots available';
 
-    // Price
     var priceEl = document.getElementById('modal-price');
     if (priceEl) {
       priceEl.textContent = config.ticketPriceFormatted || '$1,500 MXN';
@@ -479,7 +274,7 @@
 
     // Stops
     var stopsHtml = '';
-    if (tour.stops.length > 0) {
+    if (tour.stops && tour.stops.length > 0) {
       stopsHtml = '<div class="tt-modal__stops-title">Tour Stops</div>';
       tour.stops.forEach(function (stop, i) {
         stopsHtml +=
@@ -493,18 +288,11 @@
     }
     document.getElementById('modal-stops').innerHTML = stopsHtml;
 
-    // Qty
     var qtyInput = document.getElementById('ticket-qty');
     qtyInput.value = 1;
     qtyInput.max = Math.min(tour.remainingSpots, 10);
 
     updateBookButton();
-
-    // Google Calendar link for customer
-    var gcalLink = document.getElementById('modal-gcal-link');
-    if (gcalLink) {
-      gcalLink.href = buildGoogleCalendarUrl(tour);
-    }
 
     modal.setAttribute('aria-hidden', 'false');
     modal.classList.add('tt-modal--open');
@@ -536,7 +324,7 @@
     btn.disabled = false;
   }
 
-  // ─── Helpers ────────────────────────────────────────────
+  // ─── Helpers ──────────────────────────────────────────
   function escapeHtml(str) {
     if (!str) return '';
     var div = document.createElement('div');
@@ -549,66 +337,23 @@
     return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
   }
 
-  function showError(msg) {
-    var grid = document.getElementById('cal-grid');
-    if (grid) {
-      grid.innerHTML =
-        '<div class="tt-cal__error">' +
-        '<p>' + escapeHtml(msg) + '</p>' +
-        '</div>';
-    }
-  }
-
-  // ─── Init ──────────────────────────────────────────────
+  // ─── Init ────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', function () {
     config = loadConfig();
+    allTours = config.tours || [];
+    renderCalendar();
 
-    // Fetch tours from Google Calendar then render
-    fetchTours(currentYear, currentMonth)
-      .then(function (tours) {
-        allTours = tours;
-        renderCalendar();
-      });
-
-    // Month navigation — refetch when changing months
+    // Month navigation
     document.getElementById('cal-prev').addEventListener('click', function () {
       currentMonth--;
       if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-      // Check if we already have data for this month
-      var prefix = currentYear + '-' + String(currentMonth + 1).padStart(2, '0');
-      var hasData = allTours.some(function (t) { return t.date.startsWith(prefix); });
-      if (hasData) {
-        renderCalendar();
-      } else {
-        fetchTours(currentYear, currentMonth).then(function (tours) {
-          // Merge with existing tours (avoid duplicates)
-          var existingIds = {};
-          allTours.forEach(function (t) { existingIds[t.id] = true; });
-          tours.forEach(function (t) {
-            if (!existingIds[t.id]) allTours.push(t);
-          });
-          renderCalendar();
-        });
-      }
+      renderCalendar();
     });
 
     document.getElementById('cal-next').addEventListener('click', function () {
       currentMonth++;
       if (currentMonth > 11) { currentMonth = 0; currentYear++; }
-      var prefix = currentYear + '-' + String(currentMonth + 1).padStart(2, '0');
-      var hasData = allTours.some(function (t) { return t.date.startsWith(prefix); });
-      if (hasData) {
-        renderCalendar();
-      } else {
-        fetchTours(currentYear, currentMonth).then(function (tours) {
-          var existingIds = {};
-          allTours.forEach(function (t) { existingIds[t.id] = true; });
-          tours.forEach(function (t) {
-            if (!existingIds[t.id]) allTours.push(t);
-          });
-          renderCalendar();
-        });
-      }
+      renderCalendar();
     });
 
     // Filters
@@ -651,7 +396,7 @@
       updateBookButton();
     });
 
-    // Book button — Shopify add to cart
+    // Book button
     document.getElementById('modal-book-btn').addEventListener('click', function () {
       if (!selectedTour) return;
       var qty = parseInt(document.getElementById('ticket-qty').value, 10);

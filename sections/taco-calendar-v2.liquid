@@ -4,7 +4,7 @@
     {%- comment -%} Header: month nav + filters {%- endcomment -%}
     <div class="tt-cal__header">
       <div class="tt-cal__header-left">
-        <p class="tt-section-label">Book your spot</p>
+        <p class="tt-section-label">{{ section.settings.label | default: 'Book your spot' }}</p>
         <h2 class="tt-section-title" id="cal-month-title">Loading...</h2>
       </div>
       <div class="tt-cal__controls">
@@ -88,59 +88,82 @@
       <button class="tt-btn tt-btn--primary tt-btn--large tt-modal__book-btn" id="modal-book-btn">
         Add to Cart
       </button>
-
-      <a href="#" class="tt-modal__gcal-link" id="modal-gcal-link" target="_blank" rel="noopener noreferrer">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-        Add to Google Calendar
-      </a>
     </div>
   </div>
 </section>
 
 {%- comment -%}
   ═══════════════════════════════════════════════════════════
-  CONFIGURATION
+  SETUP — One time in Shopify Admin
   ═══════════════════════════════════════════════════════════
-  1. Create a Google Calendar for your tours
-  2. Make it PUBLIC (Settings → Access permissions → Make available to public)
-  3. Get the Calendar ID (Settings → Integrate calendar → Calendar ID)
-  4. Get a Google API key from console.cloud.google.com
-     - Enable "Google Calendar API"
-     - Create an API key, restrict it to Calendar API + your domain
-  5. In Shopify, create ONE product called "Taco Tour Ticket" at $1,500 MXN
-     - Track inventory OFF (availability managed via Google Calendar)
-  6. Fill in the section settings below
 
-  GOOGLE CALENDAR EVENT FORMAT:
-  ─────────────────────────────
-  Title:       Tour A — Ruta Roma-Condesa
-  Time:        Set the actual start & end time of the tour
-  Location:    Meeting point address
-  Description: Use this structured format:
+  1. Go to Settings > Custom data > Metaobjects > Add definition
+  2. Name: "Taco Tour"  (handle will be "taco_tour")
+  3. Turn ON "Storefront access"
+  4. Add these fields:
 
-    type: street
-    period: night
-    capacity: 10
-    stops:
-    Tacos Orinoco | Bistek con queso
-    El Vilsito | Suadero nocturno
-    Taquería Los Cocuyos | Cabeza y lengua
-    El Huequito | Pastor original
+     Field name        Type                    Key
+     ──────────────    ──────────────────      ──────────
+     Tour name         Single line text        tour_name
+     Route             Single line text        route
+     Date              Date                    date
+     Start time        Single line text        start_time
+     End time          Single line text        end_time
+     Type              Single line text        tour_type
+       (use "street" or "premium")
+     Period            Single line text        period
+       (use "morning" or "night")
+     Capacity          Integer                 capacity
+     Spots booked      Integer                 spots_booked
+     Meeting point     Single line text        meeting_point
+     Stops             Multi-line text         stops
+       (one per line: "Tacos Orinoco | Bistek con queso")
+
+  5. Go to Content > Metaobjects > Taco Tour > Add entry
+     Fill in the fields for each tour date.
+
+  6. Create ONE product called "Taco Tour Ticket" for checkout.
 
   ═══════════════════════════════════════════════════════════
 {%- endcomment -%}
 
-{%- comment -%} Pass Shopify product variant ID for the generic ticket product {%- endcomment -%}
+{%- comment -%} Build tour data from metaobjects {%- endcomment -%}
 {%- assign ticket_product = all_products[section.settings.ticket_product_handle] -%}
 
 <script id="taco-calendar-config" type="application/json">
 {
-  "googleCalendarId": {{ section.settings.google_calendar_id | json }},
-  "googleApiKey": {{ section.settings.google_api_key | json }},
   "ticketVariantId": {% if ticket_product %}{{ ticket_product.variants.first.id | json }}{% else %}null{% endif %},
   "ticketPrice": {% if ticket_product %}{{ ticket_product.variants.first.price | money_without_currency | remove: ',' | json }}{% else %}"1500"{% endif %},
   "ticketPriceFormatted": {% if ticket_product %}{{ ticket_product.variants.first.price | money | json }}{% else %}"$1,500.00 MXN"{% endif %},
-  "timezone": {{ section.settings.timezone | default: "America/Mexico_City" | json }}
+  "tours": [
+    {%- for tour in metaobjects.taco_tour.values -%}
+      {%- assign remaining = tour.capacity.value | minus: tour.spots_booked.value -%}
+      {%- assign stops_raw = tour.stops.value | newline_to_br | split: '<br />' -%}
+      {
+        "id": {{ tour.system.handle | json }},
+        "tourName": {{ tour.tour_name.value | default: "Tour" | json }},
+        "routeName": {{ tour.route.value | default: "" | json }},
+        "date": {{ tour.date.value | json }},
+        "time": {{ tour.start_time.value | append: " - " | append: tour.end_time.value | json }},
+        "startTime": {{ tour.start_time.value | default: "" | json }},
+        "endTime": {{ tour.end_time.value | default: "" | json }},
+        "routeType": {{ tour.tour_type.value | default: "street" | json }},
+        "period": {{ tour.period.value | default: "morning" | json }},
+        "capacity": {{ tour.capacity.value | default: 10 }},
+        "remainingSpots": {{ remaining | at_least: 0 }},
+        "location": {{ tour.meeting_point.value | default: "" | json }},
+        "stops": [
+          {%- for stop_line in stops_raw -%}
+            {%- assign stop_line_clean = stop_line | strip -%}
+            {%- if stop_line_clean != blank and stop_line_clean contains '|' -%}
+              {%- assign stop_parts = stop_line_clean | split: '|' -%}
+              { "name": {{ stop_parts[0] | strip | json }}, "taco": {{ stop_parts[1] | strip | json }} }{%- unless forloop.last -%},{%- endunless -%}
+            {%- endif -%}
+          {%- endfor -%}
+        ]
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
 }
 </script>
 
@@ -151,27 +174,10 @@
   "name": "Tour Calendar",
   "settings": [
     {
-      "type": "header",
-      "content": "Google Calendar"
-    },
-    {
       "type": "text",
-      "id": "google_calendar_id",
-      "label": "Google Calendar ID",
-      "info": "Settings → Integrate calendar → Calendar ID (e.g. abc123@group.calendar.google.com)"
-    },
-    {
-      "type": "text",
-      "id": "google_api_key",
-      "label": "Google API Key",
-      "info": "From console.cloud.google.com — enable Calendar API, restrict to your domain"
-    },
-    {
-      "type": "text",
-      "id": "timezone",
-      "label": "Timezone",
-      "default": "America/Mexico_City",
-      "info": "IANA timezone for event times"
+      "id": "label",
+      "label": "Section label",
+      "default": "Book your spot"
     },
     {
       "type": "header",
